@@ -1,6 +1,8 @@
 #!/bin/bash
 
-RESULT=$(/Users/yosuke/Work/tools/trans/transc $1)
+CURDIR=$(dirname $0)
+
+RESULT=$(${CURDIR}/transc $1 ${CURDIR}/)
 
 echo ${RESULT} | pbcopy
 

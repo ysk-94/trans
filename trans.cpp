@@ -8,7 +8,8 @@ int main(int args, char* argv[]) {
 	if (args < 1) return 1;
 
 	// Read api key.
-	std::ifstream ifs("/Users/yosuke/Work/tools/trans/.config");
+	char confName[] = ".config";
+	std::ifstream ifs(strcat(argv[2], confName));
 	std::string apiKey;
 	getline(ifs, apiKey);
 
