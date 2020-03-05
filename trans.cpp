@@ -21,7 +21,7 @@ int main(int args, char* argv[]) {
 		std::string resBody = res->body;
 		std::string err;
 		auto json = json11::Json::parse(resBody, err);
-		std::cout << json << std::endl;
+		std::cout << json["translated_text"].string_value() << std::endl;
 	}
 }
 
