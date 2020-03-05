@@ -1,10 +1,8 @@
 #include <iostream>
 #include "httplib.h"
-#include "json11.hpp"
 #include <string>
 
 int main(int args, char* argv[]) {
-	std::cout << argv[1] << std::endl;
 
 	if (args < 1) return 1;
 
@@ -16,12 +14,31 @@ int main(int args, char* argv[]) {
 	char url[] = "/v1/engine/translate.json?text=";
 
 	auto res = cli.Get(strcat(url, argv[1]), headers);
-	std::cout << res->status << std::endl;
 	if (res && res->status == 200) {
+
 		std::string resBody = res->body;
-		std::string err;
-		auto json = json11::Json::parse(resBody, err);
-		std::cout << json["translated_text"].string_value() << std::endl;
+		int s = resBody.find("translated_text");
+		std::string res1 = resBody.substr(s, 100);
+
+		int s2 = res1.find(":");
+		std::string res2 = res1.substr(++s2, 100);
+
+		int s3 = res2.find(",");
+		std::string res3 = res2.substr(0, s3);
+
+		res3.erase(res3.begin());
+		res3.erase(--res3.end());
+
+		std::cout << res3 << std::endl;
+
 	}
 }
 
+
+//std::string err;
+//		auto json = json11::Json::parse(resBody, err);
+//		std::cout << json.dump() << std::endl;
+//
+//		for (auto &k : json["0"].array_items()) {
+//			std::cout << k.dump() << std::endl;
+//		}
