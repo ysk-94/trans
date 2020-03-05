@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RESULT=$(/Users/uu173225/work/tools/transc/transc $1)
+RESULT=$(/Users/yosuke/Work/tools/trans/transc $1)
 
 echo ${RESULT} | pbcopy
 

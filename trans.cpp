@@ -7,7 +7,7 @@ int main(int args, char* argv[]) {
 
 	if (args < 1) return 1;
 
-	std::ifstream ifs("/Users/uu173225/work/tools/transc/.config");
+	std::ifstream ifs("/Users/yosuke/Work/tools/trans/.config");
 	std::string apiKey;
 	getline(ifs, apiKey);
 
