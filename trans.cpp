@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "httplib.h"
 #include <string>
 
@@ -6,9 +7,14 @@ int main(int args, char* argv[]) {
 
 	if (args < 1) return 1;
 
+	std::ifstream ifs("/Users/uu173225/work/tools/transc/.config");
+	std::string apiKey;
+	getline(ifs, apiKey);
+
+
 	httplib::Client cli("api.codic.jp");
 	httplib::Headers headers = {
-		{ "Authorization", "Bearer sxvj7zYmzo6OEYfBCgzOGfKoz10XM0bJgz" }
+		{ "Authorization", "Bearer " + apiKey }
 	};
 
 	char url[] = "/v1/engine/translate.json?text=";
