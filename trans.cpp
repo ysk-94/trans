@@ -7,44 +7,41 @@ int main(int args, char* argv[]) {
 
 	if (args < 1) return 1;
 
+	// Read api key.
 	std::ifstream ifs("/Users/yosuke/Work/tools/trans/.config");
 	std::string apiKey;
 	getline(ifs, apiKey);
 
-
+	// Generate http client. 
 	httplib::Client cli("api.codic.jp");
 	httplib::Headers headers = {
 		{ "Authorization", "Bearer " + apiKey }
 	};
 
+	// GET request.
 	char url[] = "/v1/engine/translate.json?text=";
-
 	auto res = cli.Get(strcat(url, argv[1]), headers);
+
+
+	// Parse response.
+	int buf = 100;
+	std::string key = "translated_text";
 	if (res && res->status == 200) {
 
 		std::string resBody = res->body;
-		int s = resBody.find("translated_text");
-		std::string res1 = resBody.substr(s, 100);
+		int s = resBody.find(key);
+		std::string fullKey = "\"" + key + "\"";
+		int lng = fullKey.length();
+		std::string res1 = resBody.substr(s + lng , buf);
 
-		int s2 = res1.find(":");
-		std::string res2 = res1.substr(++s2, 100);
+		int s2 = res1.find(",");
+		std::string res2 = res1.substr(0, s2);
 
-		int s3 = res2.find(",");
-		std::string res3 = res2.substr(0, s3);
+		res2.erase(res2.begin());
+		res2.erase(--res2.end());
 
-		res3.erase(res3.begin());
-		res3.erase(--res3.end());
-
-		std::cout << res3 << std::endl;
+		std::cout << res2 << std::endl;
 
 	}
 }
 
-
-//std::string err;
-//		auto json = json11::Json::parse(resBody, err);
-//		std::cout << json.dump() << std::endl;
-//
-//		for (auto &k : json["0"].array_items()) {
-//			std::cout << k.dump() << std::endl;
-//		}
