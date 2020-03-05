@@ -1,5 +1,6 @@
 #include <iostream>
 #include "httplib.h"
+#include "json11.hpp"
 #include <string>
 
 int main(int args, char* argv[]) {
@@ -17,6 +18,10 @@ int main(int args, char* argv[]) {
 	auto res = cli.Get(strcat(url, argv[1]), headers);
 	std::cout << res->status << std::endl;
 	if (res && res->status == 200) {
-		std::cout << res->body << std::endl;
+		std::string resBody = res->body;
+		std::string err;
+		auto json = json11::Json::parse(resBody, err);
+		std::cout << json << std::endl;
 	}
 }
+
